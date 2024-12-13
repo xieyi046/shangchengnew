@@ -1,6 +1,7 @@
 package dao
 
 import (
+
 	"github.com/shangcheng/Project/Project/internal/config"
 	"github.com/shangcheng/Project/Project/internal/models"
 	"gorm.io/gorm"
@@ -41,3 +42,15 @@ func (dao *UserDao) GetUserByUsername(username string) (*models.User, error) {
 	}
 	return &user, nil
 }
+
+// 获取用户详细信息
+func (dao *UserDao) GetUserDetails(id int) (*models.User, error) {
+	var user models.User
+	result := dao.DB.Where("user_id = ?", id).First(&user)
+	if result.Error != nil {
+		return nil, result.Error
+	}
+	return &user, nil
+}
+
+//获取用户余额
