@@ -7,8 +7,8 @@ import (
 
 	"github.com/gin-gonic/gin"
 
-	"github.com/shangcheng/Project/Project/internal/consts"
-	"github.com/shangcheng/Project/Project/pkg/e"
+	"github.com/shangcheng/Project/internal/consts"
+	"github.com/shangcheng/Project/pkg/e"
 )
 
 // Response 基础序列化器

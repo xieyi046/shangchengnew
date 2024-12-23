@@ -3,9 +3,9 @@ package services
 import (
 	"errors"
 
-	"github.com/shangcheng/Project/Project/internal/dao"
-	"github.com/shangcheng/Project/Project/internal/models"
-	"github.com/shangcheng/Project/Project/types"
+	"github.com/shangcheng/Project/internal/dao"
+	"github.com/shangcheng/Project/internal/models"
+	"github.com/shangcheng/Project/types"
 )
 
 type ProductService struct {

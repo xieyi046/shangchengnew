@@ -4,8 +4,8 @@ import (
 	"errors"
 	"time"
 
-	"github.com/shangcheng/Project/Project/internal/dao"
-	"github.com/shangcheng/Project/Project/internal/models"
+	"github.com/shangcheng/Project/internal/dao"
+	"github.com/shangcheng/Project/internal/models"
 	"gorm.io/gorm"
 )
 

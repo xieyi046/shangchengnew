@@ -4,9 +4,9 @@ import (
 	"errors"
 	"log"
 
-	"github.com/shangcheng/Project/Project/internal/dao"
-	"github.com/shangcheng/Project/Project/internal/models"
-	jwt "github.com/shangcheng/Project/Project/pkg/util/jwt"
+	"github.com/shangcheng/Project/internal/dao"
+	"github.com/shangcheng/Project/internal/models"
+	jwt "github.com/shangcheng/Project/pkg/util/jwt"
 	"golang.org/x/crypto/bcrypt"
 )
 

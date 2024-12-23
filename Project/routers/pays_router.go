@@ -2,9 +2,9 @@ package routers
 
 import (
 	"github.com/gin-gonic/gin"
-	"github.com/shangcheng/Project/Project/handlers"
-	"github.com/shangcheng/Project/Project/internal/dao"
-	"github.com/shangcheng/Project/Project/internal/services"
+	"github.com/shangcheng/Project/handlers"
+	"github.com/shangcheng/Project/internal/dao"
+	"github.com/shangcheng/Project/internal/services"
 	"gorm.io/gorm"
 )
 

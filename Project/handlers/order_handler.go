@@ -4,8 +4,8 @@ import (
 	"net/http"
 
 	"github.com/gin-gonic/gin"
-	"github.com/shangcheng/Project/Project/internal/models"
-	"github.com/shangcheng/Project/Project/internal/services"
+	"github.com/shangcheng/Project/internal/models"
+	"github.com/shangcheng/Project/internal/services"
 
 	"strconv"
 )

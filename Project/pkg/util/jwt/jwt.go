@@ -5,7 +5,7 @@ import (
 	"time"
 
 	"github.com/golang-jwt/jwt"
-	"github.com/shangcheng/Project/Project/internal/consts"
+	"github.com/shangcheng/Project/internal/consts"
 )
 
 var jwtSecret = []byte("FanOne") // 建议从环境变量或配置文件加载

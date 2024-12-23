@@ -5,8 +5,8 @@ import (
 	"net/http"
 
 	"github.com/gin-gonic/gin"
-	"github.com/shangcheng/Project/Project/internal/config"
-	"github.com/shangcheng/Project/Project/routers"
+	"github.com/shangcheng/Project/internal/config"
+	"github.com/shangcheng/Project/routers"
 )
 
 func main() {

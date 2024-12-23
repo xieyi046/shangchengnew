@@ -1,7 +1,7 @@
 package config
 
 import (
-	"github.com/shangcheng/Project/Project/internal/models"
+	"github.com/shangcheng/Project/internal/models"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
 )

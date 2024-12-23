@@ -4,11 +4,11 @@ import (
 	"net/http"
 	"strconv"
 
-	"github.com/shangcheng/Project/Project/types"
+	"github.com/shangcheng/Project/types"
 
 	"github.com/gin-gonic/gin"
-	"github.com/shangcheng/Project/Project/internal/models"
-	"github.com/shangcheng/Project/Project/internal/services"
+	"github.com/shangcheng/Project/internal/models"
+	"github.com/shangcheng/Project/internal/services"
 )
 
 type ProductHandler struct {

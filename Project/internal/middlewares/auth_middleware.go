@@ -4,9 +4,9 @@ import (
 	"errors"
 
 	"github.com/gin-gonic/gin"
-	"github.com/shangcheng/Project/Project/internal/consts"
-	ctl "github.com/shangcheng/Project/Project/pkg/ctl"
-	"github.com/shangcheng/Project/Project/pkg/util/jwt"
+	"github.com/shangcheng/Project/internal/consts"
+	ctl "github.com/shangcheng/Project/pkg/ctl"
+	"github.com/shangcheng/Project/pkg/util/jwt"
 )
 
 // AuthMiddleware token验证中间件

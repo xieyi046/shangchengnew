@@ -3,7 +3,7 @@ package dao
 import (
 	"errors"
 
-	"github.com/shangcheng/Project/Project/internal/models"
+	"github.com/shangcheng/Project/internal/models"
 	"gorm.io/gorm"
 )
 

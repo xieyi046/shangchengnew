@@ -4,8 +4,8 @@ import (
 	"errors"
 	"fmt"
 
-	"github.com/shangcheng/Project/Project/internal/config"
-	"github.com/shangcheng/Project/Project/internal/models"
+	"github.com/shangcheng/Project/internal/config"
+	"github.com/shangcheng/Project/internal/models"
 
 	"gorm.io/gorm"
 )
