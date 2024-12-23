@@ -5,7 +5,7 @@ import (
 
 	"github.com/gin-gonic/gin"
 	"github.com/shangcheng/Project/Project/internal/consts"
-	"github.com/shangcheng/Project/Project/pkg/util/ctl"
+	ctl "github.com/shangcheng/Project/Project/pkg/ctl"
 	"github.com/shangcheng/Project/Project/pkg/util/jwt"
 )
 
