@@ -1,9 +1,12 @@
 package dao
 
 import (
+	"errors"
+	"fmt"
 
 	"github.com/shangcheng/Project/Project/internal/config"
 	"github.com/shangcheng/Project/Project/internal/models"
+
 	"gorm.io/gorm"
 )
 
@@ -35,22 +38,49 @@ func (dao *UserDao) GetUserByID(id int) (*models.User, error) {
 
 // 根据用户名获取用户
 func (dao *UserDao) GetUserByUsername(username string) (*models.User, error) {
-	var user models.User
+	var user *models.User
 	result := dao.DB.Where("username = ?", username).First(&user)
 	if result.Error != nil {
+		if errors.Is(result.Error, gorm.ErrRecordNotFound) {
+			return nil, errors.New("user not found")
+		}
 		return nil, result.Error
 	}
-	return &user, nil
+	return user, nil
 }
 
-// 获取用户详细信息
-func (dao *UserDao) GetUserDetails(id int) (*models.User, error) {
-	var user models.User
-	result := dao.DB.Where("user_id = ?", id).First(&user)
+// 更新用户余额
+func (dao *UserDao) UpdateUserById(id uint, user *models.User) error {
+	// 首先检查用户是否存在
+	var existingUser models.User
+	result := dao.DB.First(&existingUser, id)
 	if result.Error != nil {
-		return nil, result.Error
+		if errors.Is(result.Error, gorm.ErrRecordNotFound) {
+			return fmt.Errorf("用户不存在")
+		}
+		return fmt.Errorf("获取用户信息失败: %v", result.Error)
 	}
-	return &user, nil
+
+	// 准备要更新的数据
+	updateData := map[string]interface{}{
+		"money": user.Money,
+		// 可以根据需要添加其他字段
+	}
+
+	// 使用 GORM 的 Model 和 Updates 方法进行更新
+	result = dao.DB.Model(&existingUser).Updates(updateData)
+	if result.Error != nil {
+		return fmt.Errorf("更新用户信息失败: %v", result.Error)
+	}
+	return nil
 }
 
-//获取用户余额
+// 更新用户身份信息
+func (dao *UserDao) UpdateUser(user *models.User) error {
+	// 更新数据库中的用户信息
+	result := dao.DB.Exec("UPDATE users SET username = ?, password = ?, phone = ? WHERE id = ?", user.UserName, user.PassWord, user.Phone, user.Id)
+	if result.Error != nil {
+		return result.Error
+	}
+	return nil
+}

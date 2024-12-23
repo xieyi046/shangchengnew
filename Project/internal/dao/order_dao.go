@@ -44,3 +44,16 @@ func (dao *OrderDao) GetOrderById(orderId int) (*models.Order, error) {
 	return &order, nil
 }
 
+func (dao *OrderDao) GetOrdersByUserId(userId, offset, pageSize int, orders *[]*models.Order) error {
+	// 使用分页查询
+	err := dao.DB.Model(&models.Order{}).
+		Where("user_id = ?", userId).
+		Offset(offset).
+		Limit(pageSize).
+		Find(orders).Error
+	if err != nil {
+		return err
+	}
+
+	return nil
+}

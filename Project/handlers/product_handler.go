@@ -1,16 +1,16 @@
 package handlers
 
 import (
-	"github.com/shangcheng/Project/Project/types"
 	"net/http"
 	"strconv"
+
+	"github.com/shangcheng/Project/Project/types"
 
 	"github.com/gin-gonic/gin"
 	"github.com/shangcheng/Project/Project/internal/models"
 	"github.com/shangcheng/Project/Project/internal/services"
 )
 
-// ProductHandler 处理产品的请求
 type ProductHandler struct {
 	ProductService *services.ProductService
 }
@@ -32,7 +32,7 @@ func (h *ProductHandler) AddProduct(c *gin.Context) {
 	c.JSON(http.StatusCreated, newProduct)
 }
 
-// 获取所有产品
+// 获取产品列表
 func (h *ProductHandler) GetAllProducts(c *gin.Context) {
 	// 使用 types.BasePage 从请求中获取分页参数，默认值为第1页，每页10条记录
 	var page types.BasePage
@@ -64,7 +64,7 @@ func (h *ProductHandler) GetAllProducts(c *gin.Context) {
 	c.JSON(http.StatusOK, response)
 }
 
-// 获取单个产品
+// 获取产品详情
 func (h *ProductHandler) GetProductById(c *gin.Context) {
 	idStr := c.DefaultQuery("id", "")
 	id, err := strconv.Atoi(idStr)

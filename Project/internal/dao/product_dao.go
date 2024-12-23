@@ -54,10 +54,25 @@ func (dao *ProductDao) DeleteProduct(id uint) error {
 }
 
 // 更新商品
-func (dao *ProductDao) UpdateProduct(product *models.Product) error {
-	return dao.DB.Model(&models.Product{}).
-		Where("id=?", product.Id).
-		Updates(&product).Error
+func (dao *ProductDao) UpdateProductStock(productId int, quantity int) error {
+	// 1. 获取商品信息
+	var product models.Product
+	if err := dao.DB.Model(&models.Product{}).Where("id = ?", productId).First(&product).Error; err != nil {
+		return err
+	}
+
+	// 2. 判断库存是否足够
+	if product.Struct < quantity {
+		return errors.New("库存不足")
+	}
+
+	// 3. 更新库存
+	newStock := product.Struct - quantity
+	if err := dao.DB.Model(&models.Product{}).Where("id = ?", productId).Update("struct", newStock).Error; err != nil {
+		return err
+	}
+
+	return nil
 }
 
 // 搜索
@@ -73,3 +88,5 @@ func (dao *ProductDao) SearchProduct(info string, page types.BasePage) (products
 	}
 	return
 }
+
+//获取商品库存，判断库存是否充足

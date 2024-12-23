@@ -4,6 +4,7 @@ import (
 	"net/http"
 
 	"github.com/gin-gonic/gin"
+	"github.com/shangcheng/Project/Project/internal/models"
 	"github.com/shangcheng/Project/Project/internal/services"
 
 	"strconv"
@@ -16,19 +17,18 @@ type OrderHandler struct {
 
 // 创建订单
 func (h *OrderHandler) CreateOrder(c *gin.Context) {
-	var request struct {
-		UserId     int     `json:"user_id"`
-		OrderPrice float64 `json:"order_price"`
-		PayType    string  `json:"pay_type"`
-	}
-
-	if err := c.ShouldBindJSON(&request); err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+	var order models.Order
+	// 解析请求的 JSON 数据
+	if err := c.ShouldBindJSON(&order); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "无效的请求数据"})
 		return
 	}
 
-	order, err := h.OrderService.CreateOrder(request.UserId, request.OrderPrice, request.PayType)
-	if err != nil {
+	userId := c.GetInt("user_id") // 假设用户ID存储在上下文中，或者通过请求传递
+	order.UserId = userId         // 设置用户ID
+
+	// 调用服务层的创建订单方法
+	if err := h.OrderService.CreateOrder(&order); err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
 	}
@@ -36,6 +36,25 @@ func (h *OrderHandler) CreateOrder(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{
 		"message": "订单创建成功",
 		"order":   order,
+	})
+}
+
+// 订单列表
+func (h *OrderHandler) GetOrderList(c *gin.Context) {
+	userId := c.GetInt("user_id") // 假设用户ID存储在上下文中，或者通过请求传递
+
+	// 获取分页参数 (可选)
+	page, _ := strconv.Atoi(c.DefaultQuery("page", "1"))
+	pageSize, _ := strconv.Atoi(c.DefaultQuery("page_size", "10"))
+
+	orders, err := h.OrderService.GetOrdersByUserId(userId, page, pageSize)
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		return
+	}
+
+	c.JSON(http.StatusOK, gin.H{
+		"orders": orders,
 	})
 }
 
@@ -100,4 +119,3 @@ func (h *OrderHandler) GetOrderDetails(c *gin.Context) {
 		"order": order,
 	})
 }
-

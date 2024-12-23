@@ -2,8 +2,9 @@ package services
 
 import (
 	"errors"
-	"github.com/shangcheng/Project/Project/internal/models"
+
 	"github.com/shangcheng/Project/Project/internal/dao"
+	"github.com/shangcheng/Project/Project/internal/models"
 	"github.com/shangcheng/Project/Project/types"
 )
 
@@ -26,7 +27,7 @@ func (s *ProductService) AddProduct(product models.Product) (*models.Product, er
 	return &product, nil
 }
 
-// 获取所有商品
+// 获取商品列表
 func (s *ProductService) GetPaginatedProducts(page types.BasePage) ([]*models.Product, int64, error) {
 	var products []*models.Product
 	var total int64
@@ -57,20 +58,24 @@ func (s *ProductService) GetProductById(id int) (*models.Product, error) {
 
 // 更新商品
 func (s *ProductService) UpdateProduct(id int, updatedProduct models.Product) (*models.Product, error) {
+	// 1. 获取商品信息
 	product, err := s.ProductDao.GetProductById(uint(id))
 	if err != nil {
-		return nil, errors.New("product not found")
+		return nil, errors.New("商品不存在")
 	}
 
+	// 2. 更新商品信息
 	product.Name = updatedProduct.Name
 	product.Price = updatedProduct.Price
 	product.Struct = updatedProduct.Struct
 
-	err = s.ProductDao.UpdateProduct(product)
+	// 3. 更新库存
+	err = s.ProductDao.UpdateProductStock(product.Id, product.Struct)
 	if err != nil {
 		return nil, err
 	}
 
+	// 4. 返回更新后的商品信息
 	return product, nil
 }
 

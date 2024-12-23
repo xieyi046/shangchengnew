@@ -12,7 +12,7 @@ type User struct {
 	PassWord  string    `json:"password"`   //密码
 	Phone     string    `json:"phone"`      //手机号
 	StartTime time.Time `json:"start_time"` //账号创建时间
-	Momey     int       `json:"momey"`      //余额
+	Money     float64   `json:"money"`      //余额
 }
 
 // 验证注册信息

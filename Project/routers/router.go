@@ -10,8 +10,10 @@ func SetupRouter(db *gorm.DB) *gin.Engine {
 
 	// 用户注册路由
 	SetupUserRouter(r, db)
-    SetupOrderRouter(r, db)
-    SetupProductRouter(r, db)
+	SetupOrderRouter(r, db)
+	SetupProductRouter(r, db)
+	SetupPayRouter(r, db)
+	SetupPaysRouter(r, db)
 
 	return r
 }

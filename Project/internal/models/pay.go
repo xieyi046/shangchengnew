@@ -1,10 +1,11 @@
 package models
 
+//单商品购买
 type Pay struct {
-OrderId int `json:"order_id"`
-OrderNo string `json:"order_no"`
-ProductId int `json:"product_id"`
-ProductNum int `json:"product_num"
-PayMoney int `json:"product_money"`
-
+	OrderId    int     `json:"order_id"`    //订单I
+	UserId     int     `json:"user_id"`     //用户ID
+	PayTime    string  `json:"pay_time"`    //支付时间
+	PayMoney   float64 `json:"paymoney"`    //支付金额
+	ProductId  int     `json:"product_id"`  //商品名称
+	ProductNum int     `json:"product_num"` //商品数量
 }
