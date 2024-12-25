@@ -43,7 +43,7 @@ func (h *OrderHandler) CreateOrder(c *gin.Context) {
 func (h *OrderHandler) GetOrderList(c *gin.Context) {
 	userId := c.GetInt("user_id") // 假设用户ID存储在上下文中，或者通过请求传递
 
-	// 获取分页参数 (可选)
+	// 获取分页参数
 	page, _ := strconv.Atoi(c.DefaultQuery("page", "1"))
 	pageSize, _ := strconv.Atoi(c.DefaultQuery("page_size", "10"))
 

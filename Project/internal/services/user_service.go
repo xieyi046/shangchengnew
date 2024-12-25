@@ -3,6 +3,7 @@ package services
 import (
 	"errors"
 	"log"
+	"time"
 
 	"github.com/shangcheng/Project/internal/dao"
 	"github.com/shangcheng/Project/internal/models"
@@ -30,9 +31,13 @@ func (s *UserService) CreateUser(user *models.User) error {
 	// 对密码进行哈希处理
 	hashedPassword, err := bcrypt.GenerateFromPassword([]byte(user.PassWord), bcrypt.DefaultCost)
 	if err != nil {
-		return errors.New("密码哈希失败")
+		return errors.New("失败")
 	}
 	user.PassWord = string(hashedPassword)
+
+	user.Money = 0.0
+
+	user.StartTime = time.Now()
 
 	if err := s.UserDao.CreateUser(user); err != nil {
 		return err

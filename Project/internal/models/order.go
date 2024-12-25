@@ -7,7 +7,7 @@ type Order struct {
 	UserId     int       `json:"user_id"`     //用户id
 	On         string    `json:"on"`          //订单号
 	Money      float64   `json:"money"`       //商品金额
-	Num        int       `json:"numint"`      //商品数量
+	Num        int       `json:"num"`         //商品数量
 	OrderPrice float64   `json:"order_price"` //订单金额
 	CreateTime time.Time `json:"create_time"` //订单创建时间
 	UpdateTime time.Time `json:"update_time"` //订单更新时间

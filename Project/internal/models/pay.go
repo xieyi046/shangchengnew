@@ -2,6 +2,7 @@ package models
 
 //单商品购买
 type Pay struct {
+	PayId      int     `json:"pay_id"`      //支付ID
 	OrderId    int     `json:"order_id"`    //订单I
 	UserId     int     `json:"user_id"`     //用户ID
 	PayTime    string  `json:"pay_time"`    //支付时间

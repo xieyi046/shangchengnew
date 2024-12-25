@@ -1,6 +1,8 @@
 package config
 
 import (
+	"fmt"
+
 	"github.com/shangcheng/Project/internal/models"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
@@ -17,6 +19,20 @@ func InitDB() error {
 	}
 
 	// 自动迁移
-	DB.AutoMigrate(&models.User{})
+	modelsToMigrate := []interface{}{
+		&models.User{},
+		&models.Product{},
+		&models.Order{},
+		&models.Pay{},
+		&models.MultiPay{},
+		&models.PayItem{},
+	}
+
+	for _, model := range modelsToMigrate {
+		if err := DB.AutoMigrate(model); err != nil {
+			return fmt.Errorf("failed to migrate table for model %T: %w", model, err)
+		}
+	}
+
 	return nil
 }
