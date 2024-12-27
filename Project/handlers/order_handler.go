@@ -24,8 +24,12 @@ func (h *OrderHandler) CreateOrder(c *gin.Context) {
 		return
 	}
 
-	userId := c.GetInt("user_id") // 假设用户ID存储在上下文中，或者通过请求传递
-	order.UserId = userId         // 设置用户ID
+	userId, exists := c.Get("user_id")
+	if !exists {
+		c.JSON(http.StatusUnauthorized, gin.H{"error": "用户未认证"})
+		return
+	}
+	order.UserId = userId.(int) // 设置用户ID
 
 	// 调用服务层的创建订单方法
 	if err := h.OrderService.CreateOrder(&order); err != nil {
@@ -87,7 +91,12 @@ func (h *OrderHandler) DeleteOrder(c *gin.Context) {
 		return
 	}
 
-	userId := c.GetInt("user_id") // 假设用户ID存储在上下文中，或者可以通过请求传递
+	//获取当前用户ID
+	userId := c.GetInt("user_id")
+	if userId == 0 {
+		c.JSON(http.StatusUnauthorized, gin.H{"error": "未授权用户"})
+		return
+	}
 
 	err = h.OrderService.DeleteOrder(orderId, userId)
 	if err != nil {

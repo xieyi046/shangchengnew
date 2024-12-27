@@ -36,9 +36,8 @@ func (s *PayService) PayOrder(pay models.Pay) error {
 		return errors.New("订单已支付")
 	}
 	// 3. 计算单个购买情况下的金额
-	money := order.Money
-	num := order.Num
-	paymoney := money * float64(num)
+	paymoney := order.Money * float64(order.Num)
+
 	// 4.获取用户余额
 	user, err := s.UserDao.GetUserByID(pay.UserId)
 	if err != nil {

@@ -61,12 +61,9 @@ func (dao *UserDao) UpdateUserById(id uint, user *models.User) error {
 		return fmt.Errorf("获取用户信息失败: %v", result.Error)
 	}
 
-	// 准备要更新的数据
 	updateData := map[string]interface{}{
 		"money": user.Money,
-		// 可以根据需要添加其他字段
 	}
-
 	// 使用 GORM 的 Model 和 Updates 方法进行更新
 	result = dao.DB.Model(&existingUser).Updates(updateData)
 	if result.Error != nil {

@@ -16,8 +16,8 @@ const (
 
 // Token 过期时间设置
 const (
-	AccessTokenExpireDuration  = 15 * time.Minute   // Access Token 过期时间
-	RefreshTokenExpireDuration = 7 * 24 * time.Hour // Refresh Token 过期时间
+	AccessTokenExpireDuration  = 15 * time.Minute   //  过期时间
+	RefreshTokenExpireDuration = 7 * 24 * time.Hour // 过期时间
 )
 
 // 错误码定义

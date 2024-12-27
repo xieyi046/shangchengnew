@@ -2,6 +2,7 @@ package services
 
 import (
 	"errors"
+	"fmt"
 
 	"github.com/shangcheng/Project/internal/dao"
 	"github.com/shangcheng/Project/internal/models"
@@ -14,11 +15,17 @@ type ProductService struct {
 
 // 创建商品
 func (s *ProductService) AddProduct(product models.Product) (*models.Product, error) {
-
 	if product.Name == "" {
-		return nil, errors.New("product name is required")
+		return nil, errors.New("商品名不能为空")
+	}
+	if product.Price <= 0 {
+		return nil, errors.New("商品价格要大于零")
+	}
+	if product.Struct < 0 {
+		return nil, errors.New("商品库存要大于等于零")
 	}
 
+	// 可以考虑使用事务来保证操作的一致性
 	err := s.ProductDao.CreateProduct(&product)
 	if err != nil {
 		return nil, err
@@ -49,9 +56,9 @@ func (s *ProductService) GetPaginatedProducts(page types.BasePage) ([]*models.Pr
 
 // 根据ID获取商品
 func (s *ProductService) GetProductById(id int) (*models.Product, error) {
-	product, err := s.ProductDao.GetProductById(uint(id))
+	product, err := s.ProductDao.GetProductById(id)
 	if err != nil {
-		return nil, err
+		return nil, fmt.Errorf("获取商品时出错 %d: %w", id, err)
 	}
 	return product, nil
 }
@@ -59,7 +66,7 @@ func (s *ProductService) GetProductById(id int) (*models.Product, error) {
 // 更新商品
 func (s *ProductService) UpdateProduct(id int, updatedProduct models.Product) (*models.Product, error) {
 	// 1. 获取商品信息
-	product, err := s.ProductDao.GetProductById(uint(id))
+	product, err := s.ProductDao.GetProductById(id)
 	if err != nil {
 		return nil, errors.New("商品不存在")
 	}
@@ -82,7 +89,7 @@ func (s *ProductService) UpdateProduct(id int, updatedProduct models.Product) (*
 // 删除商品
 func (s *ProductService) DeleteProduct(id int) error {
 
-	err := s.ProductDao.DeleteProduct(uint(id))
+	err := s.ProductDao.DeleteProduct(id)
 	if err != nil {
 		return err
 	}

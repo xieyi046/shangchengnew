@@ -16,11 +16,11 @@ type Claims struct {
 	jwt.StandardClaims
 }
 
-// GenerateToken 签发用户Token
+// 签发用户Token
 func GenerateToken(id int, username string) (accessToken, refreshToken string, err error) {
 	nowTime := time.Now()
-	expireTime := nowTime.Add(consts.AccessTokenExpireDuration)
-	rtExpireTime := nowTime.Add(consts.RefreshTokenExpireDuration)
+	expireTime := nowTime.Add(consts.AccessTokenExpireDuration)    //访问令牌
+	rtExpireTime := nowTime.Add(consts.RefreshTokenExpireDuration) //刷新令牌
 
 	claims := Claims{
 		ID:       id,
@@ -48,7 +48,7 @@ func GenerateToken(id int, username string) (accessToken, refreshToken string, e
 	return accessToken, refreshToken, nil
 }
 
-// ParseToken 验证用户token
+// 验证用户token
 func ParseToken(token string) (*Claims, error) {
 	tokenClaims, err := jwt.ParseWithClaims(token, &Claims{}, func(token *jwt.Token) (interface{}, error) {
 		if _, ok := token.Method.(*jwt.SigningMethodHMAC); !ok {

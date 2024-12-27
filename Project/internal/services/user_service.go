@@ -36,7 +36,6 @@ func (s *UserService) CreateUser(user *models.User) error {
 	user.PassWord = string(hashedPassword)
 
 	user.Money = 0.0
-
 	user.StartTime = time.Now()
 
 	if err := s.UserDao.CreateUser(user); err != nil {

@@ -20,12 +20,6 @@ func (h *UserHandler) RegisterUser(c *gin.Context) {
 		return
 	}
 
-	// 验证注册数据
-	if err := req.Validate(); err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"error": "验证失败", "message": err.Error()})
-		return
-	}
-
 	// 创建用户
 	if err := h.UserService.CreateUser(&req); err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
